@@ -9,5 +9,5 @@ import { nftaddress,nftmarketaddress} from "../configr";
 
 
 export default function Home() {
-  return <div className={styles.container}>Hello</div>;
+  return <div className={styles.container}>Hello There!</div>;
 }
