@@ -1,30 +1,20 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
 const hre = require("hardhat");
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const NFTMarket = await hre.ethers.getContractFactory("NFTMarket");
+  const nftmarket = await NFTMarket.deploy();
+  await nftmarket.deployed();
+  const nftMarketAddress = nftmarket.address;
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+  const NFT = await hre.ethers.getContractFactory("NFT");
+  const nft = await NFT.deploy(nftMarketAddress);
+  await nft.deployed();
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
-
-  await lock.deployed();
-
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+  console.log(`NFTMarket Contract deployed to ${nftmarket.address}`);//0xd8d98Cb76768F81b0F506a54149df3538011eAe5
+  console.log(`NFT Contract deployed to ${nft.address}`);//0x184697914f5cE976aB8f9F90E01236E60E50F146
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
+
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
