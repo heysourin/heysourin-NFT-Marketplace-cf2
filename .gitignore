@@ -1,4 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+#Tutorial link: https://www.youtube.com/watch?v=7Q5E6RvLlUw&t=20222s
+
 
 # dependencies
 /node_modules
